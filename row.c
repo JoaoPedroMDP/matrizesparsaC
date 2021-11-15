@@ -5,6 +5,14 @@
 void insertNodeOnRow(Row *row, Node *newNode);
 int rowIsEmpty(Row *row);
 
+void advanceRowWalker(Row *walker)
+{
+    if (walker->next != NULL)
+    {
+        walker = walker->next;
+    }
+}
+
 Row *newEmptyRow()
 {
     Row *newRow = malloc(sizeof(Row));
@@ -79,14 +87,6 @@ int isNotTheLast(int currentCol, int colNum)
 }
 
 /*
- * Verifica se um elemento é o último da linha
- */
-int isLastElement(Row *row, Node *node)
-{
-    return row->last == node;
-}
-
-/*
  * Imprime a linha na tela
  * A ideia é sempre incrementar o número da coluna que vai ser printada
  * O que não vale para o nodo. O nodo só irá passar para o próximo caso o número
@@ -103,10 +103,7 @@ void printRow(Row *row, int matrixWidth)
         if (walker != NULL && col == walker->col)
         {
             printNode(walker);
-            if (!isLastElement(row, walker))
-            {
-                walker = walker->next;
-            }
+            advanceNodeWalker(walker);
         }
         else
         {
@@ -132,7 +129,7 @@ Node *findPenultimate(Row *row)
             return walker;
         }
 
-        walker = walker->next;
+        advanceNodeWalker(walker);
     }
 
     return walker;

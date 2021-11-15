@@ -11,6 +11,7 @@ struct Node
 };
 
 Node *createNode(int row, int col, int data);
+void advanceNodeWalker(Node *walker);
 void printZeroNode();
 void printNode(Node *node);
 void db();

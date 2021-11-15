@@ -15,6 +15,14 @@ Node *createNode(int row, int col, int data)
     return newNode;
 }
 
+void advanceNodeWalker(Node *walker)
+{
+    if (walker->next != NULL)
+    {
+        walker = walker->next;
+    }
+}
+
 void printZeroNode()
 {
     printf("0 ");

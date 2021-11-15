@@ -31,6 +31,7 @@ int main()
     scanf("%d", &option);
     while (option != 11)
     {
+        printf("\n<<<<<%d>>>>>\n", option);
         switch (option)
         {
         case 1:
@@ -47,9 +48,9 @@ int main()
         //     multiplyMatrixesOption(bag);
         //     break;
         case 5:
-            // toOperate = chooseMatrix(bag);
-            // transposeMatrix(toOperate);
-            // break;
+            toOperate = chooseMatrix(bag);
+            transposeMatrix(toOperate);
+            break;
         case 6:
             toOperate = chooseMatrix(bag);
             printMatrix(toOperate);

@@ -230,15 +230,21 @@ void showAllMatrixes(MatrixBag *bag)
     }
 }
 
-// void transposeMatrix(Matrix *matrix)
-// {
-//     Matrix *transposedMatrix = newEmptyMatrix();
-//     Row *rowWalker = matrix->firstRow;
-//     Node *colWalker = rowWalker->first;
-//     int col = 0, row = 0;
+void transposeMatrix(Matrix *matrix)
+{
+    Matrix *transposedMatrix = newEmptyMatrix();
+    Row *rowWalker = matrix->firstRow;
+    Node *colWalker = rowWalker->first;
+    int col = 0, row = 0;
 
-//     while (row < matrix->size)
-//     {
-//         while (col <)
-//     }
-// }
+    while (row < matrix->size)
+    {
+        while (col < matrix->biggestRow)
+        {
+            advanceNodeWalker(colWalker);
+            col++;
+        }
+        advanceRowWalker(rowWalker);
+        row++;
+    }
+}
