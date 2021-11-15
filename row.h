@@ -11,10 +11,4 @@ struct Row
     Row *next;
     int size;
 };
-
-void advanceRowWalker(Row *walker);
-Row *readRowFromInput(int row);
-void printRow(Row *row, int matrixWidth);
-Node *getNodeByCoordinates(Row *nodeRow, int row, int col);
-
 #endif

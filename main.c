@@ -24,8 +24,6 @@ void printsMenu()
 int main()
 {
     int option = 0;
-    MatrixBag *bag = createBag();
-    Matrix *toOperate = NULL;
     printsMenu();
     setbuf(stdin, 0);
     scanf("%d", &option);
@@ -35,9 +33,9 @@ int main()
         switch (option)
         {
         case 1:
-            toOperate = createMatrixOption();
-            insertMatrixOnBag(toOperate, bag);
-            break;
+            // toOperate = createMatrixOption();
+            // insertMatrixOnBag(toOperate, bag);
+            // break;
         // case 2:
         //     sumMatrixesOption(bag);
         //     break;
@@ -48,26 +46,29 @@ int main()
         //     multiplyMatrixesOption(bag);
         //     break;
         case 5:
-            toOperate = chooseMatrix(bag);
-            transposeMatrix(toOperate);
-            break;
+            // toOperate = chooseMatrix(bag);
+            // transposeMatrix(toOperate);
+            // break;
         case 6:
-            toOperate = chooseMatrix(bag);
-            printMatrix(toOperate);
-            break;
+            // toOperate = chooseMatrix(bag);
+            // printMatrix(toOperate);
+            // break;
         case 7:
-            toOperate = chooseMatrix(bag);
-            showMainDiagonalOption(toOperate);
-            break;
+            // toOperate = chooseMatrix(bag);
+            // showMainDiagonalOption(toOperate);
+            // break;
         case 8:
-            toOperate = chooseMatrix(bag);
-            removeMatrix(bag, toOperate);
-            break;
-        // case 9:
+            // toOperate = chooseMatrix(bag);
+            // removeMatrix(bag, toOperate);
+            // break;
+        case 9:
         //     searchByContent(bag);
         //     break;
         case 10:
-            showAllMatrixes(bag);
+            // showAllMatrixes(bag);
+            // break;
+        default:
+            printf("Opcao %d nao encontrada", option);
             break;
         }
         printsMenu();
