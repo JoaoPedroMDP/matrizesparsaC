@@ -8,10 +8,10 @@ all: compile
 
 compile:
 	clear
-	gcc -Wall main.c matrix.h matrix.c row.h row.c node.h node.c
+	gcc -Wall main.c matrixBag.h matrixBag.c matrix.h matrix.c row.h row.c node.h node.c
 
-debug: CFLAGS += -g -DDEBUG
-debug: all
+debug: 
+	valgrind --leak-check=full ./a.out < inp.txt
 
 clean:
 	rm -rf $(objects)

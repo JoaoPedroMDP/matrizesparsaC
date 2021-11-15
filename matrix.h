@@ -4,21 +4,16 @@
 #include "row.h"
 
 typedef struct Matrix Matrix;
-typedef struct MatrixBag MatrixBag;
-
-struct MatrixBag
-{
-    Matrix *firstMatrix;
-    Matrix *lastMatrix;
-    int size;
-};
-
 struct Matrix
 {
-    Row *firstRow;
-    Row *lastRow;
+    Row *first;
+    Row *last;
     Matrix *next;
     int size;
     int biggestRow;
 };
+
+Matrix *createMatrix();
+void printMatrix(Matrix *matrix);
+
 #endif

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "matrix.h"
+#include "matrixBag.h"
 
 /*
  * Mostra o menu
@@ -24,6 +24,9 @@ void printsMenu()
 int main()
 {
     int option = 0;
+    Bag *bag = createBag();
+    zeroNode = createNode(0, 0, 0);
+
     printsMenu();
     setbuf(stdin, 0);
     scanf("%d", &option);
@@ -33,9 +36,10 @@ int main()
         switch (option)
         {
         case 1:
-            // toOperate = createMatrixOption();
-            // insertMatrixOnBag(toOperate, bag);
-            // break;
+            appendMatrix(
+                bag,
+                createMatrix());
+            break;
         // case 2:
         //     sumMatrixesOption(bag);
         //     break;
@@ -50,9 +54,8 @@ int main()
             // transposeMatrix(toOperate);
             // break;
         case 6:
-            // toOperate = chooseMatrix(bag);
-            // printMatrix(toOperate);
-            // break;
+            printMatrix(chooseMatrix(bag));
+            break;
         case 7:
             // toOperate = chooseMatrix(bag);
             // showMainDiagonalOption(toOperate);
