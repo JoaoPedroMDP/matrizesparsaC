@@ -7,7 +7,7 @@
  */
 void printsMenu()
 {
-    printf("------------------MENU------------------\n");
+    printf("\n------------------MENU------------------\n");
     printf("   1) Inserir nova matriz\n");
     printf("   2) Somar matrizes\n");
     printf("   3) Subtrair matrizes\n");
@@ -30,49 +30,53 @@ int main()
     printsMenu();
     setbuf(stdin, 0);
     scanf("%d", &option);
-    while (option != 11)
+    while (option != -1)
     {
         printf("\n<<<<<%d>>>>>\n", option);
         switch (option)
         {
-        case 1:
-            appendMatrix(
-                bag,
-                createMatrix());
-            break;
-        // case 2:
-        //     sumMatrixesOption(bag);
-        //     break;
-        // case 3:
-        //     subtractMatrixesOption(bag);
-        //     break;
-        // case 4:
-        //     multiplyMatrixesOption(bag);
-        //     break;
-        case 5:
-            // toOperate = chooseMatrix(bag);
-            // transposeMatrix(toOperate);
-            // break;
-        case 6:
-            printMatrix(chooseMatrix(bag));
-            break;
-        case 7:
-            // toOperate = chooseMatrix(bag);
-            // showMainDiagonalOption(toOperate);
-            // break;
-        case 8:
-            // toOperate = chooseMatrix(bag);
-            // removeMatrix(bag, toOperate);
-            // break;
-        case 9:
-        //     searchByContent(bag);
-        //     break;
-        case 10:
-            showAllMatrixes(bag);
-            break;
-        default:
-            printf("Opcao %d nao encontrada", option);
-            break;
+            case -1:
+                printf("Ateh!");
+                break;
+            case 1:
+                appendMatrix(
+                    bag,
+                    createMatrix());
+                break;
+            // case 2:
+            //     sumMatrixesOption(bag);
+            //     break;
+            // case 3:
+            //     subtractMatrixesOption(bag);
+            //     break;
+            // case 4:
+            //     multiplyMatrixesOption(bag);
+            //     break;
+            case 5:
+                // toOperate = chooseMatrix(bag);
+                // transposeMatrix(toOperate);
+                // break;
+            case 6:
+                printMatrix(chooseMatrix(bag));
+                break;
+            case 7:
+                showMainDiagonal(chooseMatrix(bag));
+                break;
+            case 8:
+                removeMatrixFromBag(
+                    bag,
+                    chooseMatrix(bag)
+                );
+                break;
+            case 9:
+            //     searchByContent(bag);
+            //     break;
+            case 10:
+                showAllMatrixes(bag);
+                break;
+            default:
+                printf("Opcao %d nao encontrada", option);
+                break;
         }
         printsMenu();
         setbuf(stdin, 0);

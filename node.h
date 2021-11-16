@@ -14,6 +14,8 @@ Node *zeroNode;
 
 Node *createNode(int row, int col, int data);
 void printNode(Node *node);
+void removeNode(Node *node);
 
 void db(char *str);
+void dbint(int integ);
 #endif

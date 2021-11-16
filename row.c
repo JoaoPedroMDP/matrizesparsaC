@@ -4,7 +4,13 @@
 
 Row *mallocRow()
 {
-    return malloc(sizeof(Row));
+    Row *newRow = malloc(sizeof(Row));
+    newRow->next = NULL;
+    newRow->first = NULL;
+    newRow->last = NULL;
+    newRow->size = 0;
+    newRow->currentNode = NULL;
+    return newRow;
 }
 
 void appendNode(Row *row, Node *node);
@@ -14,9 +20,7 @@ Row *createRow(int rowNum)
     int number = 0, col = 0;
     char spacing = ' ';
 
-    newRow->next = NULL;
     newRow->row = rowNum;
-    newRow->currentNode = NULL;
 
     do
     {
@@ -34,6 +38,7 @@ Row *createRow(int rowNum)
         }
         col++;
     } while (spacing != '\n');
+
     return newRow;
 }
 
@@ -53,7 +58,7 @@ void appendNode(Row *row, Node *node)
 }
 
 int isLastNode(Row *row, Node *node);
-Node *getNode(int rowNum, int colNum, Row *row)
+Node *getNode(int rowNum, int colNum, Row *row) // TODO: uhm teoricamente não preciso desse rowNum kkkk n sei pq ele tá aqui. Mai funciona
 {
     Node *walker = row->first;
     while (walker != NULL)
@@ -76,19 +81,30 @@ void printRow(Row *row, int cols)
     Node *walker = row->first;
     int colTracker = 0;
 
-    for( colTracker = 0; colTracker < cols; colTracker++){
+    for (colTracker = 0; colTracker < cols; colTracker++)
+    {
         printNode(
             getNode(
                 row->row,
                 colTracker,
-                row
-            )
-        );
+                row));
 
-        
-        if(walker != NULL)
+        if (walker != NULL)
         {
             walker = walker->next;
         }
     }
+}
+
+void removeRow(Row *row)
+{
+    Node *walker = row->first;
+    while (walker != NULL)
+    {
+        removeNode(walker);
+        row->size--;
+        walker = walker->next;
+    }
+
+    free(row);
 }

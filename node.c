@@ -23,7 +23,17 @@ void printNode(Node *node)
     printf(" %d", node->data);
 }
 
+void removeNode(Node *node)
+{
+    free(node);
+}
+
 void db(char *str)
 {
     printf("\n%s\n", str);
+}
+
+void dbint(int integ)
+{
+    printf("\n%d\n", integ);
 }

@@ -15,5 +15,6 @@ struct Matrix
 
 Matrix *createMatrix();
 void printMatrix(Matrix *matrix);
-
+void removeMatrix(Matrix *matrix);
+int showMainDiagonal(Matrix *matrix);
 #endif

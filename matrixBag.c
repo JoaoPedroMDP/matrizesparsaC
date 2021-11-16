@@ -74,3 +74,19 @@ void showAllMatrixes(Bag *bag)
         walker = walker->next;
     }
 }
+
+void removeMatrixFromBag(Bag *bag, Matrix *matrix)
+{
+    if(matrix != NULL){
+        removeMatrix(matrix);
+        bag->size--;
+
+        if(bag->size > 0)
+        {
+            bag->last = getMatrixByIndex(bag, bag->size - 1);
+        }else{
+            bag->first = NULL;
+            bag->last = NULL;
+        }    
+    }
+}
