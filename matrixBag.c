@@ -60,3 +60,17 @@ void appendMatrix(Bag *bag, Matrix *matrix)
     bag->last = matrix;
     bag->size++;
 }
+
+void showAllMatrixes(Bag *bag)
+{
+    Matrix *walker = bag->first;
+    int i = 0;
+
+    for (i = 0; walker != NULL; i++)
+    {
+        printf("Matriz %d\n", i);
+        printMatrix(walker);
+        printf("\n");
+        walker = walker->next;
+    }
+}

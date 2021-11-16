@@ -68,8 +68,8 @@ int main()
         //     searchByContent(bag);
         //     break;
         case 10:
-            // showAllMatrixes(bag);
-            // break;
+            showAllMatrixes(bag);
+            break;
         default:
             printf("Opcao %d nao encontrada", option);
             break;

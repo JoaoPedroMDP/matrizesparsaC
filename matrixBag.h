@@ -14,5 +14,6 @@ struct Bag
 Bag *createBag();
 Matrix *chooseMatrix(Bag *bag);
 void appendMatrix(Bag *bag, Matrix *matrix);
+void showAllMatrixes(Bag *bag);
 
 #endif
