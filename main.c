@@ -2,22 +2,33 @@
 #include <stdlib.h>
 #include "matrixBag.h"
 
+#define EXIT -1
+#define CREATE_MATRIX 1
+// #define
+// #define
+// #define
+#define PRINT_MATRIX 6
+#define SHOW_MAIN_DIAGONAL 7
+#define REMOVE_MATRIX 8
+#define SHOW_ALL_MATRIXES 10
+
 /*
  * Mostra o menu
  */
 void printsMenu()
 {
     printf("\n------------------MENU------------------\n");
-    printf("   1) Inserir nova matriz\n");
+    printf("   %d) Sair\n", EXIT);
+    printf("   %d) Inserir nova matriz\n", CREATE_MATRIX);
     printf("   2) Somar matrizes\n");
     printf("   3) Subtrair matrizes\n");
     printf("   4) Multiplicar matrizes\n");
     printf("   5) Gerar matriz transposta\n");
-    printf("   6) Mostrar matriz\n");
-    printf("   7) Mostrar diagonal principal\n");
-    printf("   8) Remover Matriz\n");
+    printf("   %d) Mostrar matriz\n", PRINT_MATRIX);
+    printf("   %d) Mostrar diagonal principal\n", SHOW_MAIN_DIAGONAL);
+    printf("   %d) Remover Matriz\n", REMOVE_MATRIX);
     printf("   9) Consultar pelo conteudo\n");
-    printf("   10) Sair\n");
+    printf("   %d) Sair\n", EXIT);
     printf("Escolha uma opção: ");
 }
 
@@ -35,10 +46,10 @@ int main()
         printf("\n<<<<<%d>>>>>\n", option);
         switch (option)
         {
-            case -1:
+            case EXIT:
                 printf("Ateh!");
                 break;
-            case 1:
+            case CREATE_MATRIX:
                 appendMatrix(
                     bag,
                     createMatrix());
@@ -56,13 +67,13 @@ int main()
                 // toOperate = chooseMatrix(bag);
                 // transposeMatrix(toOperate);
                 // break;
-            case 6:
+            case PRINT_MATRIX:
                 printMatrix(chooseMatrix(bag));
                 break;
-            case 7:
+            case SHOW_MAIN_DIAGONAL:
                 showMainDiagonal(chooseMatrix(bag));
                 break;
-            case 8:
+            case REMOVE_MATRIX:
                 removeMatrixFromBag(
                     bag,
                     chooseMatrix(bag)
@@ -71,7 +82,7 @@ int main()
             case 9:
             //     searchByContent(bag);
             //     break;
-            case 10:
+            case SHOW_ALL_MATRIXES:
                 showAllMatrixes(bag);
                 break;
             default:
