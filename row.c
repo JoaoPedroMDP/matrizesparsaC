@@ -2,33 +2,35 @@
 #include <stdlib.h>
 #include "row.h"
 
-void insertNodeOnRow(Row *row, Node *newNode);
-int rowIsEmpty(Row *row);
-
-Row *newEmptyRow()
+Row *mallocRow()
 {
     Row *newRow = malloc(sizeof(Row));
+    newRow->next = NULL;
     newRow->first = NULL;
     newRow->last = NULL;
-    newRow->next = NULL;
     newRow->size = 0;
+    newRow->currentNode = NULL;
     return newRow;
 }
 
-Row *readRowFromInput(int row)
+void appendNode(Row *row, Node *node);
+Row *createRow(int rowNum)
 {
+    Row *newRow = mallocRow();
     int number = 0, col = 0;
     char spacing = ' ';
-    Row *newRow = newEmptyRow();
-    Node *newNode = NULL;
+
+    newRow->row = rowNum;
 
     do
     {
         scanf("%d%c", &number, &spacing);
         if (number != 0)
         {
-            newNode = createNode(row, col, number);
-            insertNodeOnRow(newRow, newNode);
+            appendNode(
+                newRow,
+                createNode(newRow->row, col, number)
+            );
         }
         else
         {
@@ -40,124 +42,69 @@ Row *readRowFromInput(int row)
     return newRow;
 }
 
-/*
- * Verifica se a linha está vazia
- */
-int rowIsEmpty(Row *row)
+void appendNode(Row *row, Node *node)
 {
-    return row->first == NULL;
-}
-
-/*
- * Insere um nó no final da linha
- */
-void insertNodeOnRow(Row *row, Node *newNode)
-{
-    if (rowIsEmpty(row))
+    if (row->first == NULL)
     {
-        row->first = newNode;
+        row->first = node;
     }
     else
     {
-        row->last->next = newNode;
+        row->last->next = node;
     }
-    row->last = newNode;
+
+    row->last = node;
     row->size++;
 }
 
-/*
- * Nem sempre o número da coluna atual é igual o do último nodo não-nulo
- */
-int isZeroNode(int currentCol, int currentNodeCol)
+int isLastNode(Row *row, Node *node);
+Node *getNode(int rowNum, int colNum, Row *row) // TODO: uhm teoricamente não preciso desse rowNum kkkk n sei pq ele tá aqui. Mai funciona
 {
-    return currentCol != currentNodeCol;
-}
-
-int isNotTheLast(int currentCol, int colNum)
-{
-    return currentCol < colNum;
-}
-
-/*
- * Verifica se um elemento é o último da linha
- */
-int isLastElement(Row *row, Node *node)
-{
-    return row->last == node;
-}
-
-/*
- * Imprime a linha na tela
- * A ideia é sempre incrementar o número da coluna que vai ser printada
- * O que não vale para o nodo. O nodo só irá passar para o próximo caso o número
- * da coluna atual é igual ao número da coluna do nodo atual. Se isso for
- * verdadeiro, então mostra-se o conteúdo do nodo atual e passa-se para o próximo
- * Se for falso, mostro um '0' na tela e incremento o numero da coluna
- */
-void printRow(Row *row, int matrixWidth)
-{
-    int col = 0;
     Node *walker = row->first;
-    while (col < matrixWidth)
+    while (walker != NULL)
     {
-        if (walker != NULL && col == walker->col)
+        if (walker->row == rowNum && walker->col == colNum)
         {
-            printNode(walker);
-            if (!isLastElement(row, walker))
-            {
-                walker = walker->next;
-            }
+            return walker;
         }
         else
         {
-            printZeroNode();
+            walker = walker->next;
         }
-
-        col++;
     }
-    printf("\n");
-    // }
+
+    return zeroNode;
 }
 
-/*
- * Encontra o penúltimo elemento da linha
- */
-Node *findPenultimate(Row *row)
+void printRow(Row *row, int cols)
+{
+    Node *walker = row->first;
+    int colTracker = 0;
+
+    for (colTracker = 0; colTracker < cols; colTracker++)
+    {
+        printNode(
+            getNode(
+                row->row,
+                colTracker,
+                row));
+
+        if (walker != NULL)
+        {
+            walker = walker->next;
+        }
+    }
+}
+
+void removeRow(Row *row)
 {
     Node *walker = row->first;
     while (walker != NULL)
     {
-        if (walker->next == row->last)
-        {
-            return walker;
-        }
-
+        removeNode(walker);
+        row->size--;
         walker = walker->next;
     }
 
-    return walker;
-}
-
-/*
- * Verifica se um elemento é o primeiro da linha
- */
-int isFirstElement(Row *row, Node *node)
-{
-    return (row->first == node) || (row->size == 0);
-}
-
-Node *getNodeByCoordinates(Row *nodeRow, int row, int col)
-{
-    Node *walker = nodeRow->first;
-    while (walker != NULL)
-    {
-        if (walker->row == row && walker->col == col)
-        {
-            return walker;
-        }
-
-        walker = walker->next;
-    }
-
-    return NULL;
+    free(row);
 }

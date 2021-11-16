@@ -2,40 +2,38 @@
 #include <stdlib.h>
 #include "node.h"
 
-/*
- * Cria um novo nó
- */
-Node *createNode(int row, int col, int data)
+Node *mallocNode()
 {
-    Node *newNode = malloc(sizeof(Node));
-    newNode->next = NULL;
-    newNode->data = data;
-    newNode->row = row;
-    newNode->col = col;
-    return newNode;
+    return malloc(sizeof(Node));
 }
 
-void printZeroNode()
+Node *createNode(int row, int col, int data)
 {
-    printf("0 ");
+    Node *newNode = mallocNode();
+    newNode->col = col;
+    newNode->row = row;
+    newNode->data = data;
+    newNode->next = NULL;
+
+    return newNode;
 }
 
 void printNode(Node *node)
 {
-    printf("%d ", node->data);
+    printf(" %d", node->data);
 }
 
-void dbin()
+void removeNode(Node *node)
 {
-    printf("<[");
+    free(node);
 }
 
-void dbout()
+void db(char *str)
 {
-    printf("]>");
+    printf("\n%s\n", str);
 }
 
-void dbint(int num)
+void dbint(int integ)
 {
-    printf("\n>>%d<<\n", num);
+    printf("\n%d\n", integ);
 }

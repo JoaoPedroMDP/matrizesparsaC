@@ -2,243 +2,127 @@
 #include <stdlib.h>
 #include "matrix.h"
 
-/*Cria uma bolsa vazia de matrizes*/
-MatrixBag *createBag()
+Matrix *mallocMatrix()
 {
-    MatrixBag *newBag = malloc(sizeof(MatrixBag));
-    newBag->firstMatrix = NULL;
-    newBag->lastMatrix = NULL;
-    newBag->size = 0;
-    return newBag;
+    Matrix *newMatrix = malloc(sizeof(Matrix));
+    newMatrix->first = NULL;
+    newMatrix->last = NULL;
+    newMatrix->next = NULL;
+    newMatrix->size = 0;
+    newMatrix->biggestRow = -1;
+
+    return newMatrix;
 }
 
-int bagIsEmpty(MatrixBag *bag)
+void appendRow(Matrix *matrix, Row *row);
+Matrix *createMatrix()
 {
-    return bag->size == 0;
-}
-
-/* Procura por uma matriz de acordo com o index dela.
- * NÂO PROCESSA OFFSET DE INPUT DO USUÁRIO, 
- * Se mandar 4 vai procurar pelo 4 começando do 0, e não pelo 3 começando do 0
- */
-Matrix *getMatrixByIndex(MatrixBag *bag, int index)
-{
-    int i;
-    Matrix *finder = bag->firstMatrix;
-    for (i = 0; i < bag->size; i++)
+    db(">>>>>>>>>>>>>>>>>>>");
+    Matrix *newMatrix = mallocMatrix();
+    char keepInsertion = 'S';
+    do
     {
-        if (i == index)
-        {
-            return finder;
-        }
-        else
-        {
-            finder = finder->next;
-        }
-    }
-    printf("Endereço não encontrado");
-    return NULL;
+        appendRow(newMatrix, createRow(newMatrix->size));
+        printf("Continuar inserindo? S/n");
+        scanf("%c", &keepInsertion);
+    } while (keepInsertion == 'S' || keepInsertion == 's');
+
+    return newMatrix;
 }
 
-int matrixIsEmpty(Matrix *matrix)
+void appendRow(Matrix *matrix, Row *row)
 {
-    return matrix->size == 0;
-}
-
-void updateBiggestRow(Matrix *matrix, Row *newRow)
-{
-    if (newRow->size > matrix->biggestRow)
+    if (matrix->first == NULL)
     {
-        matrix->biggestRow = newRow->size;
-    }
-}
-
-void insertRowInMatrix(Matrix *matrix, Row *newRow)
-{
-    if (matrixIsEmpty(matrix))
-    {
-        matrix->firstRow = newRow;
+        matrix->first = row;
     }
     else
     {
-        matrix->lastRow->next = newRow;
+        matrix->last->next = row;
     }
-    matrix->lastRow = newRow;
-    matrix->size++;
 
-    updateBiggestRow(matrix, newRow);
-}
-
-Matrix *createMatrixOption()
-{
-    char keepReading = 'S';
-
-    Matrix *newMatrix = newEmptyMatrix();
-
-    while (keepReading == 'S' || keepReading == 's')
+    if (row->size > matrix->biggestRow)
     {
-        //  O tamanho da matriz é definido pelo numero de linhas, portanto posso usar o tamanho
-        // para dizer qual linha está sendo inserida no momento
-        Row *newRow = readRowFromInput(newMatrix->size);
-        insertRowInMatrix(newMatrix, newRow);
-        printf("Continuar inserindo? S/n");
-        scanf("%c", &keepReading);
+        matrix->biggestRow = row->size;
     }
-
-    return newMatrix;
-}
-
-Matrix *newEmptyMatrix()
-{
-    Matrix *newMatrix = malloc(sizeof(Matrix));
-    newMatrix->firstRow = NULL;
-    newMatrix->lastRow = NULL;
-    newMatrix->next = NULL;
-    newMatrix->size = 0;
-    newMatrix->biggestRow = 0;
-
-    return newMatrix;
+    matrix->last = row;
+    matrix->size++;
 }
 
 void printMatrix(Matrix *matrix)
 {
-    Row *row = matrix->firstRow;
-    while (row != NULL)
+    if(matrix != NULL)
     {
-        printRow(row, matrix->biggestRow);
-        row = row->next;
-    }
-}
+        Row *walker = matrix->first;
 
-Matrix *chooseMatrix(MatrixBag *bag)
-{
-    int wantedMatrix = 0;
-    printf("Digite o numero da matriz. Lembre-se que a primeira matriz eh a 0: ");
-    setbuf(stdin, 0);
-    scanf("%d", &wantedMatrix);
-    return getMatrixByIndex(bag, wantedMatrix);
-}
-
-void insertMatrixOnBag(Matrix *newMatrix, MatrixBag *bag)
-{
-    if (bagIsEmpty(bag))
-    {
-        bag->firstMatrix = newMatrix;
-    }
-    else
-    {
-        bag->lastMatrix->next = newMatrix;
-    }
-    bag->lastMatrix = newMatrix;
-    bag->size++;
-}
-
-int matrixIsSquared(Matrix *matrix)
-{
-    return matrix->biggestRow == matrix->size;
-}
-
-void showMainDiagonal(Matrix *matrix)
-{
-    Row *walker = matrix->firstRow;
-    Node *toShow = NULL;
-    int row = 0, col = 0;
-    while (row < matrix->size)
-    {
-        toShow = getNodeByCoordinates(walker, row, col);
-        if (toShow == NULL)
+        while (walker != NULL)
         {
-            printZeroNode();
+            printRow(walker, matrix->biggestRow);
+            printf("\n");
+            walker = walker->next;
+        }
+    }
+}
+
+Row *getRow(int rowNum, Matrix *matrix);
+void removeMatrix(Matrix *matrix)
+{
+    Row *walker = matrix->first;
+
+    while (walker != NULL)
+    {
+        removeRow(walker);
+        matrix->size--;
+        walker = walker->next;
+    }
+
+    free(matrix);
+}
+
+Row *getRow(int rowNum, Matrix *matrix)
+{
+    Row *walker = matrix->first;
+    int i = 0;
+    for (i = 0; walker != NULL; i++)
+    {
+        if (i == rowNum)
+        {
+            return walker;
         }
         else
         {
-            printNode(toShow);
+            walker = walker->next;
         }
-        col++;
-        row++;
-        walker = walker->next;
     }
+
+    printf("Linha %d nao encontrada", rowNum);
+    return NULL;
 }
 
-void showMainDiagonalOption(Matrix *matrix)
+int isSquared(Matrix *matrix);
+int showMainDiagonal(Matrix *matrix)
 {
-    if (matrixIsSquared(matrix))
+    if(matrix != NULL)
     {
-        showMainDiagonal(matrix);
+        if(!isSquared(matrix))
+        {
+            printf("Apenas matrizes quadradas possuem diagonais.\n");
+            return 0;
+        }
+
+        Row *walker = matrix->first;
+        int col = 0;
+        while(walker != NULL)
+        {
+            printNode(getNode(walker->row, col, walker));
+            walker = walker->next;
+            col++;
+        }
     }
-    else
-    {
-        printf("Somente matrizes quadradas tem diagonais");
-    }
+
+    return 1;
 }
 
-Matrix *iterateUntilNext(MatrixBag *bag, Matrix *matrix)
-{
-    Matrix *walker = bag->firstMatrix;
-    while (walker->next != matrix)
-    {
-        walker = walker->next;
-    }
-
-    return walker;
+int isSquared(Matrix *matrix){
+    return matrix->size == matrix->biggestRow;
 }
-
-void removeFromBeginning(MatrixBag *bag, Matrix *matrix)
-{
-    bag->firstMatrix = bag->firstMatrix->next;
-}
-
-void removeFromEnd(MatrixBag *bag, Matrix *matrix)
-{
-    bag->lastMatrix = iterateUntilNext(bag, bag->firstMatrix);
-}
-
-void removeFromMiddle(MatrixBag *bag, Matrix *matrix)
-{
-    Matrix *previousMatrix = iterateUntilNext(bag, matrix);
-    previousMatrix->next = matrix->next;
-}
-
-void removeMatrix(MatrixBag *bag, Matrix *matrix)
-{
-    if (matrix == bag->firstMatrix)
-    {
-        removeFromBeginning(bag, matrix);
-    }
-    else if (matrix == bag->lastMatrix)
-    {
-        removeFromEnd(bag, matrix);
-    }
-    else
-    {
-        removeFromMiddle(bag, matrix);
-    }
-    free(matrix);
-    bag->size--;
-}
-
-void showAllMatrixes(MatrixBag *bag)
-{
-    int i = 0;
-    Matrix *walker = bag->firstMatrix;
-    while (walker != NULL)
-    {
-        printf("Matriz %d:\n", i);
-        printMatrix(walker);
-        printf("\n");
-        walker = walker->next;
-    }
-}
-
-// void transposeMatrix(Matrix *matrix)
-// {
-//     Matrix *transposedMatrix = newEmptyMatrix();
-//     Row *rowWalker = matrix->firstRow;
-//     Node *colWalker = rowWalker->first;
-//     int col = 0, row = 0;
-
-//     while (row < matrix->size)
-//     {
-//         while (col <)
-//     }
-// }
