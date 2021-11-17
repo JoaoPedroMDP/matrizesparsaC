@@ -90,3 +90,51 @@ void removeMatrixFromBag(Bag *bag, Matrix *matrix)
         }    
     }
 }
+
+int isFirstMatrix(Bag *bag, Matrix *matrix);
+int isLastMatrix(Bag *bag, Matrix *matrix);
+Matrix *getPreviousMatrix(Bag *bag, Matrix *matrix);
+void replaceMatrixes(Bag *bag, Matrix *new, Matrix *old)
+{
+    if(isFirstMatrix(bag, old) || isLastMatrix(bag, old))
+    {
+        bag->first = new;
+        bag->last = new;
+    }else
+    {
+        Matrix *previous = getPreviousMatrix(bag, old);
+
+        previous->next = new;
+        new->next = old->next;
+    }
+
+    free(old);
+}
+
+int isFirstMatrix(Bag *bag, Matrix *matrix)
+{
+    return bag->first == matrix;
+}
+
+int isLastMatrix(Bag *bag, Matrix *matrix)
+{
+    return bag->last == matrix;
+}
+
+Matrix *getPreviousMatrix(Bag *bag, Matrix *matrix)
+{
+    Matrix *walker = bag->first;
+
+    while(walker != NULL)
+    {
+        if(walker->next == matrix)
+        {
+            return walker;
+        }else{
+            walker = walker->next;
+        }
+    }
+
+    printf("Nao foi encontrada a matriz anterior");
+    return NULL;
+}

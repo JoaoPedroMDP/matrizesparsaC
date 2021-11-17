@@ -8,6 +8,7 @@ Matrix *mallocMatrix()
     newMatrix->first = NULL;
     newMatrix->last = NULL;
     newMatrix->next = NULL;
+    newMatrix->currentRow = NULL;
     newMatrix->size = 0;
     newMatrix->biggestRow = -1;
 
@@ -125,4 +126,57 @@ int showMainDiagonal(Matrix *matrix)
 
 int isSquared(Matrix *matrix){
     return matrix->size == matrix->biggestRow;
+}
+
+void createAllRows(Matrix *toReceiveTheRows, int rowNum);
+Matrix *transposeMatrix(Matrix *matrix)
+{
+    int col = 0;
+    Row *rowWalker = matrix->first;
+    Node *nodeWalker = NULL;
+    Matrix *transposed = mallocMatrix(), *oldMatrix = matrix;
+
+    transposed->biggestRow = matrix->size;
+
+    createAllRows(transposed, matrix->biggestRow);
+    while(rowWalker != NULL)
+    {
+        col = 0;
+        nodeWalker = rowWalker->first;
+        transposed->currentRow = transposed->first;
+        while(col < rowWalker->size){
+            if(nodeWalker != NULL && col == nodeWalker->col)
+            {
+                appendNode(
+                    transposed->currentRow,
+                    createNode(
+                        transposed->currentRow->row, transposed->currentRow->size, nodeWalker->data
+                    )
+                );
+
+                nodeWalker = nodeWalker->next;
+            }else{
+                transposed->currentRow->size++;
+            }
+
+            transposed->currentRow = transposed->currentRow->next;
+            col++;
+        }
+
+        rowWalker = rowWalker->next;
+    }
+
+    return transposed;
+}
+
+void createAllRows(Matrix *toReceiveTheRows, int rowNum)
+{
+    int i = 0;
+    for( i = 0; i < rowNum; i++)
+    {
+        appendRow(
+            toReceiveTheRows,
+            mallocRow(i)
+        );
+    }
 }

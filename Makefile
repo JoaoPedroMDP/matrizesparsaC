@@ -11,7 +11,8 @@ compile:
 	gcc -Wall main.c matrixBag.h matrixBag.c matrix.h matrix.c row.h row.c node.h node.c
 
 debug: 
-	valgrind --leak-check=full ./a.out < inp.txt
+	clear
+	gcc -g main.c matrixBag.h matrixBag.c matrix.h matrix.c row.h row.c node.h node.c
 
 clean:
 	rm -rf $(objects)

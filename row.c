@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "row.h"
 
-Row *mallocRow()
+Row *mallocRow(int rowNum)
 {
     Row *newRow = malloc(sizeof(Row));
     newRow->next = NULL;
@@ -10,17 +10,16 @@ Row *mallocRow()
     newRow->last = NULL;
     newRow->size = 0;
     newRow->currentNode = NULL;
+    newRow->row = rowNum;
     return newRow;
 }
 
 void appendNode(Row *row, Node *node);
 Row *createRow(int rowNum)
 {
-    Row *newRow = mallocRow();
+    Row *newRow = mallocRow(rowNum);
     int number = 0, col = 0;
     char spacing = ' ';
-
-    newRow->row = rowNum;
 
     do
     {

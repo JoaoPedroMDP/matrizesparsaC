@@ -4,7 +4,11 @@
 
 Node *mallocNode()
 {
-    return malloc(sizeof(Node));
+    Node *newNode = malloc(sizeof(Node));
+    newNode->col = 0;
+    newNode->row = 0;
+    newNode->data = 0;
+    return newNode;
 }
 
 Node *createNode(int row, int col, int data)
@@ -30,10 +34,10 @@ void removeNode(Node *node)
 
 void db(char *str)
 {
-    printf("\n%s\n", str);
+    printf("\n%s", str);
 }
 
 void dbint(int integ)
 {
-    printf("\n%d\n", integ);
+    printf("%d\n", integ);
 }

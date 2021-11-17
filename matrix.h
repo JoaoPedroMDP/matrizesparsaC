@@ -8,6 +8,7 @@ struct Matrix
 {
     Row *first;
     Row *last;
+    Row *currentRow;
     Matrix *next;
     int size;
     int biggestRow;
@@ -17,4 +18,5 @@ Matrix *createMatrix();
 void printMatrix(Matrix *matrix);
 void removeMatrix(Matrix *matrix);
 int showMainDiagonal(Matrix *matrix);
+Matrix *transposeMatrix(Matrix *matrix);
 #endif
