@@ -24,7 +24,15 @@ Node *createNode(int row, int col, int data)
 
 void printNode(Node *node)
 {
-    printf(" %3d", node->data);
+    if(node->data == 0)
+    {
+        printf("\033[0;31m");
+        printf(" %3d", node->data);
+        printf("\033[0m");
+    }else
+    {
+        printf(" %3d", node->data);
+    }
 }
 
 Node *removeNode(Node *node)
