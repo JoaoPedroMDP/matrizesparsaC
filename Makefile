@@ -14,11 +14,8 @@ debug:
 	clear
 	gcc -g main.c matrixBag.h matrixBag.c matrix.h matrix.c row.h row.c node.h node.c
 
-clean:
-	rm -rf $(objects)
-
-purge: clean
-	rm -f a.out
-
 valg:
 	valgrind -s --leak-check=full ./a.out < inp.txt
+
+teste: compile
+	./a.out < testeCompleto.txt

@@ -56,7 +56,6 @@ void appendNode(Row *row, Node *node)
     row->size++;
 }
 
-int isLastNode(Row *row, Node *node);
 Node *getNode(int colNum, Row *row)
 {
     Node *walker = row->first;
@@ -106,7 +105,7 @@ void removeRow(Row *row)
     free(row);
 }
 
-Row *sumRows(Row *first, Row *second, int row)
+Row *sumRows(Row *first, Row *second)
 {
     Node *a = NULL, *b = NULL,*sum = NULL;
     Row *result = mallocRow(first->row);

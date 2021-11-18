@@ -32,12 +32,6 @@ void removeNode(Node *node)
     free(node);
 }
 
-int nodesHaveSameCoordinates(Node *first, Node *second)
-{
-    return first->col == second->col &&
-        first->row == second->row;
-}
-
 void db(char *str)
 {
     printf("\n%s", str);

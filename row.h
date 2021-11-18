@@ -20,5 +20,5 @@ Row *createRow(int rowNum);
 Node *getNode(int colNum, Row *row);
 void printRow(Row *row, int cols);
 void removeRow(Row *row);
-Row *sumRows(Row *first, Row *second, int row);
+Row *sumRows(Row *first, Row *second);
 #endif

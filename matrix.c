@@ -65,7 +65,6 @@ void printMatrix(Matrix *matrix)
     }
 }
 
-Row *getRow(int rowNum, Matrix *matrix);
 void removeMatrix(Matrix *matrix)
 {
     Row *walker = matrix->first;
@@ -78,26 +77,6 @@ void removeMatrix(Matrix *matrix)
     }
 
     free(matrix);
-}
-
-Row *getRow(int rowNum, Matrix *matrix)
-{
-    Row *walker = matrix->first;
-    int i = 0;
-    for (i = 0; walker != NULL; i++)
-    {
-        if (i == rowNum)
-        {
-            return walker;
-        }
-        else
-        {
-            walker = walker->next;
-        }
-    }
-
-    printf("Linha %d nao encontrada", rowNum);
-    return NULL;
 }
 
 int isSquared(Matrix *matrix);
@@ -193,7 +172,7 @@ void sumMatrixes(Matrix *first, Matrix *second)
     {
         appendRow(
             result,
-            sumRows(first->currentRow, second->currentRow, row)
+            sumRows(first->currentRow, second->currentRow)
         );
 
         if(first->currentRow != NULL)
