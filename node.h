@@ -15,6 +15,8 @@ Node *zeroNode;
 Node *createNode(int row, int col, int data);
 void printNode(Node *node);
 void removeNode(Node *node);
+int nodesHaveSameCoordinates(Node *first, Node *second);
+Node *sumNodes(Node *first, Node *second, int col);
 
 void db(char *str);
 void dbint(int integ);

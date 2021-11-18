@@ -17,7 +17,8 @@ struct Row
 Row *mallocRow(int rowNum);
 void appendNode(Row *row, Node *node);
 Row *createRow(int rowNum);
-Node *getNode(int rowNum, int colNum, Row *row);
+Node *getNode(int colNum, Row *row);
 void printRow(Row *row, int cols);
 void removeRow(Row *row);
+Row *sumRows(Row *first, Row *second, int row);
 #endif

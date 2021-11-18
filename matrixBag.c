@@ -84,10 +84,11 @@ void removeMatrixFromBag(Bag *bag, Matrix *matrix)
         if(bag->size > 0)
         {
             bag->last = getMatrixByIndex(bag, bag->size - 1);
-        }else{
+            bag->last->next = NULL;
+        }else {
             bag->first = NULL;
             bag->last = NULL;
-        }    
+        }
     }
 }
 

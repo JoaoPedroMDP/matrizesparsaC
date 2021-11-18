@@ -25,7 +25,7 @@ void printsMenu()
     printf("   3) Subtrair matrizes\n");
     printf("   4) Multiplicar matrizes\n");
     printf("   %d) Transpor matriz\n", TRANSPOSE_MATRIX);
-    printf("   %d) Mostrar matriz\n", PRINT_MATRIX);
+    printf("   %d) Ver matriz\n", PRINT_MATRIX);
     printf("   %d) Diagonal principal\n", SHOW_MAIN_DIAGONAL);
     printf("   %d) Remover Matriz\n", REMOVE_MATRIX);
     printf("   9) Consultar pelo conteudo\n");
@@ -56,9 +56,11 @@ int main()
                     bag,
                     createMatrix());
                 break;
-            // case 2:
-            //     sumMatrixesOption(bag);
-            //     break;
+             case 2:;
+                 Matrix *first = chooseMatrix(bag);
+                 Matrix *second = chooseMatrix(bag);
+                 sumMatrixes(first, second);
+                 break;
             // case 3:
             //     subtractMatrixesOption(bag);
             //     break;

@@ -32,6 +32,12 @@ void removeNode(Node *node)
     free(node);
 }
 
+int nodesHaveSameCoordinates(Node *first, Node *second)
+{
+    return first->col == second->col &&
+        first->row == second->row;
+}
+
 void db(char *str)
 {
     printf("\n%s", str);
@@ -40,4 +46,18 @@ void db(char *str)
 void dbint(int integ)
 {
     printf("%d\n", integ);
+}
+
+Node *sumNodes(Node *first, Node *second, int col)
+{
+    int sum = first->data + second->data;
+    if(sum == 0){
+        return zeroNode;
+    }
+
+    return createNode(
+        first->row,
+        col,
+        sum
+    );
 }

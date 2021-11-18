@@ -19,4 +19,5 @@ void printMatrix(Matrix *matrix);
 void removeMatrix(Matrix *matrix);
 int showMainDiagonal(Matrix *matrix);
 Matrix *transposeMatrix(Matrix *matrix);
+void sumMatrixes(Matrix *first, Matrix *second);
 #endif

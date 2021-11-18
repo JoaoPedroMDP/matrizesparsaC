@@ -57,12 +57,12 @@ void appendNode(Row *row, Node *node)
 }
 
 int isLastNode(Row *row, Node *node);
-Node *getNode(int rowNum, int colNum, Row *row) // TODO: uhm teoricamente não preciso desse rowNum kkkk n sei pq ele tá aqui. Mai funciona
+Node *getNode(int colNum, Row *row)
 {
     Node *walker = row->first;
     while (walker != NULL)
     {
-        if (walker->row == rowNum && walker->col == colNum)
+        if (walker->col == colNum)
         {
             return walker;
         }
@@ -83,12 +83,10 @@ void printRow(Row *row, int cols)
     for (colTracker = 0; colTracker < cols; colTracker++)
     {
         printNode(
-            getNode(
-                row->row,
-                colTracker,
-                row));
+            getNode(colTracker,row)
+        );
 
-        if (walker != NULL)
+        if (walker != NULL && walker->col == colTracker)
         {
             walker = walker->next;
         }
@@ -106,4 +104,36 @@ void removeRow(Row *row)
     }
 
     free(row);
+}
+
+Row *sumRows(Row *first, Row *second, int row)
+{
+    Node *a = NULL, *b = NULL,*sum = NULL;
+    Row *result = mallocRow(first->row);
+    int col = 0;
+    while(col < first->size)
+    {
+        a = getNode(col, first);
+        b = getNode(col, second);
+
+        sum = sumNodes(
+                a,
+                b,
+                col
+            );
+
+        if(sum->data != 0)
+        {
+            appendNode(
+                result,
+                sum
+            );
+        }else{
+            result->size++;
+        }
+
+        col++;
+    }
+
+    return result;
 }

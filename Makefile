@@ -19,3 +19,6 @@ clean:
 
 purge: clean
 	rm -f a.out
+
+valg:
+	valgrind -s --leak-check=full ./a.out < inp.txt

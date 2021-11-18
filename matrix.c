@@ -50,17 +50,17 @@ void appendRow(Matrix *matrix, Row *row)
     matrix->size++;
 }
 
+void resetCurrents(Matrix *matrix);
 void printMatrix(Matrix *matrix)
 {
+    resetCurrents(matrix);
     if(matrix != NULL)
     {
-        Row *walker = matrix->first;
-
-        while (walker != NULL)
+        while (matrix->currentRow != NULL)
         {
-            printRow(walker, matrix->biggestRow);
+            printRow(matrix->currentRow, matrix->biggestRow);
             printf("\n");
-            walker = walker->next;
+            matrix->currentRow = matrix->currentRow->next;
         }
     }
 }
@@ -115,7 +115,9 @@ int showMainDiagonal(Matrix *matrix)
         int col = 0;
         while(walker != NULL)
         {
-            printNode(getNode(walker->row, col, walker));
+            printNode(
+                getNode(col, walker)
+            );
             walker = walker->next;
             col++;
         }
@@ -134,7 +136,7 @@ Matrix *transposeMatrix(Matrix *matrix)
     int col = 0;
     Row *rowWalker = matrix->first;
     Node *nodeWalker = NULL;
-    Matrix *transposed = mallocMatrix(), *oldMatrix = matrix;
+    Matrix *transposed = mallocMatrix();
 
     transposed->biggestRow = matrix->size;
 
@@ -179,4 +181,43 @@ void createAllRows(Matrix *toReceiveTheRows, int rowNum)
             mallocRow(i)
         );
     }
+}
+
+void sumMatrixes(Matrix *first, Matrix *second)
+{
+    int row = 0;
+    Matrix *result = mallocMatrix();
+    resetCurrents(first);resetCurrents(second);resetCurrents(result);
+
+    while(first->currentRow != NULL)
+    {
+        appendRow(
+            result,
+            sumRows(first->currentRow, second->currentRow, row)
+        );
+
+        if(first->currentRow != NULL)
+        {
+            first->currentRow = first->currentRow->next;
+        }
+
+        if(second->currentRow != NULL)
+        {
+            second->currentRow = second->currentRow->next;
+        }
+        row++;
+    }
+
+    printMatrix(result);
+}
+
+void resetCurrents(Matrix *matrix)
+{
+    matrix->currentRow = matrix->first;
+    while(matrix->currentRow != NULL)
+    {
+        matrix->currentRow->currentNode = matrix->currentRow->first;
+        matrix->currentRow = matrix->currentRow->next;
+    }
+    matrix->currentRow = matrix->first;
 }
