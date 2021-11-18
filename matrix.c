@@ -162,32 +162,44 @@ void createAllRows(Matrix *toReceiveTheRows, int rowNum)
     }
 }
 
+int areSameSize(Matrix *a, Matrix*b);
 void sumMatrixes(Matrix *first, Matrix *second)
 {
-    int row = 0;
-    Matrix *result = mallocMatrix();
-    resetCurrents(first);resetCurrents(second);resetCurrents(result);
-
-    while(first->currentRow != NULL)
+    if(!areSameSize(first, second))
     {
-        appendRow(
-            result,
-            sumRows(first->currentRow, second->currentRow)
-        );
+        printf("Voce so pode somar matrizes de tamanhos iguais!");
+    }else{
+        int row = 0;
+        Matrix *result = mallocMatrix();
+        resetCurrents(first);resetCurrents(second);resetCurrents(result);
 
-        if(first->currentRow != NULL)
+        while(first->currentRow != NULL)
         {
-            first->currentRow = first->currentRow->next;
+            appendRow(
+                result,
+                sumRows(first->currentRow, second->currentRow)
+            );
+
+            if(first->currentRow != NULL)
+            {
+                first->currentRow = first->currentRow->next;
+            }
+
+            if(second->currentRow != NULL)
+            {
+                second->currentRow = second->currentRow->next;
+            }
+            row++;
         }
 
-        if(second->currentRow != NULL)
-        {
-            second->currentRow = second->currentRow->next;
-        }
-        row++;
+        printMatrix(result);
     }
+}
 
-    printMatrix(result);
+int areSameSize(Matrix *a, Matrix*b)
+{
+    return a->size == b->size &&
+            a->cols == b->cols;
 }
 
 void resetCurrents(Matrix *matrix)
@@ -204,10 +216,15 @@ void resetCurrents(Matrix *matrix)
 Matrix *invertMatrixElements(Matrix *matrix);
 void subtractMatrixes(Matrix *first, Matrix *second)
 {
-    sumMatrixes(
-        first,
-        invertMatrixElements(second)
-    );
+    if(!areSameSize(first, second))
+    {
+        printf("Voce so pode subtrair matrizes de tamanhos iguais!");
+    }else{
+        sumMatrixes(
+            first,
+            invertMatrixElements(second)
+        );
+    }
 }
 
 void copyMatrix(Matrix *copy,Matrix* paste);

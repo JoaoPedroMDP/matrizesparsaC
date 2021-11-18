@@ -28,7 +28,6 @@ void printsMenu()
     printf("   %d) Diagonal principal\n", SHOW_MAIN_DIAGONAL);
     printf("   %d) Remover Matriz\n", REMOVE_MATRIX);
     printf("   %d) Mostrar todas as matrizes\n", SHOW_ALL_MATRIXES);
-    printf("   %d) Sair\n", EXIT);
     printf("Escolha uma opção: ");
 }
 
