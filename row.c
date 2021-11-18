@@ -92,17 +92,16 @@ void printRow(Row *row, int cols)
     }
 }
 
-void removeRow(Row *row)
+Row *removeRow(Row *row)
 {
     Node *walker = row->first;
     while (walker != NULL)
     {
-        removeNode(walker);
+        walker = removeNode(walker);
         row->size--;
-        walker = walker->next;
     }
 
-    free(row);
+    return row->next;
 }
 
 Row *sumRows(Row *first, Row *second)
@@ -135,4 +134,21 @@ Row *sumRows(Row *first, Row *second)
     }
 
     return result;
+}
+
+void copyRows(Row *copy, Row *paste)
+{
+    while(copy->currentNode != NULL)
+    {
+        appendNode(
+            paste,
+            createNode(
+                copy->currentNode->row,
+                copy->currentNode->col,
+                copy->currentNode->data
+                )
+            );
+
+        copy->currentNode = copy->currentNode->next;
+    }
 }

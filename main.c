@@ -3,13 +3,14 @@
 
 #define EXIT -1
 #define CREATE_MATRIX 1
-#define TRANSPOSE_MATRIX 5
 #define SOMAR_MATRIZES 2
+#define SUBTRACT_MATRIXES 3
 // #define
-// #define
+#define TRANSPOSE_MATRIX 5
 #define PRINT_MATRIX 6
 #define SHOW_MAIN_DIAGONAL 7
 #define REMOVE_MATRIX 8
+// #define
 #define SHOW_ALL_MATRIXES 10
 
 /*
@@ -21,7 +22,7 @@ void printsMenu()
     printf("   %d) Sair\n", EXIT);
     printf("   %d) Inserir nova matriz\n", CREATE_MATRIX);
     printf("   %d) Somar matrizes\n", SOMAR_MATRIZES);
-    printf("   3) Subtrair matrizes\n");
+    printf("   %d) Subtrair matrizes\n", SUBTRACT_MATRIXES);
     printf("   4) Multiplicar matrizes\n");
     printf("   %d) Transpor matriz\n", TRANSPOSE_MATRIX);
     printf("   %d) Ver matriz\n", PRINT_MATRIX);
@@ -38,6 +39,8 @@ int main()
     int option = 0;
     Bag *bag = createBag();
     zeroNode = createNode(0, 0, 0);
+    Matrix *first = NULL;
+    Matrix *second = NULL;
 
     printsMenu();
     setbuf(stdin, 0);
@@ -55,14 +58,16 @@ int main()
                     bag,
                     createMatrix());
                 break;
-             case 2:;
-                 Matrix *first = chooseMatrix(bag);
-                 Matrix *second = chooseMatrix(bag);
-                 sumMatrixes(first, second);
-                 break;
-            // case 3:
-            //     subtractMatrixesOption(bag);
-            //     break;
+            case 2:;
+                first = chooseMatrix(bag);
+                second = chooseMatrix(bag);
+                sumMatrixes(first, second);
+                break;
+            case SUBTRACT_MATRIXES:
+                first = chooseMatrix(bag);
+                second = chooseMatrix(bag);
+                subtractMatrixes(first, second);
+                break;
             // case 4:
             //     multiplyMatrixesOption(bag);
             //     break;
@@ -80,7 +85,7 @@ int main()
             case SHOW_MAIN_DIAGONAL:
                 showMainDiagonal(chooseMatrix(bag));
                 break;
-            case REMOVE_MATRIX:
+            case REMOVE_MATRIX:;
                 removeMatrixFromBag(
                     bag,
                     chooseMatrix(bag)

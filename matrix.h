@@ -16,8 +16,9 @@ struct Matrix
 
 Matrix *createMatrix();
 void printMatrix(Matrix *matrix);
-void removeMatrix(Matrix *matrix);
+Matrix *removeMatrix(Matrix *matrix);
 int showMainDiagonal(Matrix *matrix);
 Matrix *transposeMatrix(Matrix *matrix);
 void sumMatrixes(Matrix *first, Matrix *second);
+void subtractMatrixes(Matrix *first, Matrix *second);
 #endif

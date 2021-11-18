@@ -14,7 +14,7 @@ Node *zeroNode;
 
 Node *createNode(int row, int col, int data);
 void printNode(Node *node);
-void removeNode(Node *node);
+Node *removeNode(Node *node);
 
 Node *sumNodes(Node *first, Node *second, int col);
 

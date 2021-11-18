@@ -68,33 +68,43 @@ void showAllMatrixes(Bag *bag)
 
     for (i = 0; walker != NULL; i++)
     {
-        printf("Matriz %d\n", i);
+        printf("\nMatriz %d", i);
         printMatrix(walker);
         printf("\n");
         walker = walker->next;
     }
 }
 
-void removeMatrixFromBag(Bag *bag, Matrix *matrix)
-{
-    if(matrix != NULL){
-        removeMatrix(matrix);
-        bag->size--;
-
-        if(bag->size > 0)
-        {
-            bag->last = getMatrixByIndex(bag, bag->size - 1);
-            bag->last->next = NULL;
-        }else {
-            bag->first = NULL;
-            bag->last = NULL;
-        }
-    }
-}
-
 int isFirstMatrix(Bag *bag, Matrix *matrix);
 int isLastMatrix(Bag *bag, Matrix *matrix);
 Matrix *getPreviousMatrix(Bag *bag, Matrix *matrix);
+void removeMatrixFromBag(Bag *bag, Matrix *matrix)
+{
+    if(matrix != NULL){
+
+        if(isFirstMatrix(bag, matrix))
+        {
+            bag->first = matrix->next;
+        }else{
+            Matrix *previous = getPreviousMatrix(bag, matrix);
+            previous->next = matrix->next;
+            if(isLastMatrix(bag, matrix))
+            {
+                bag->last = previous;
+            }
+        }
+        removeMatrix(matrix);
+        free(matrix);
+
+        if(bag->size == 0){
+            bag->first = NULL;
+            bag->last = NULL;
+        }
+
+        bag->size--;
+    }
+}
+
 void replaceMatrixes(Bag *bag, Matrix *new, Matrix *old)
 {
     if(isFirstMatrix(bag, old) || isLastMatrix(bag, old))

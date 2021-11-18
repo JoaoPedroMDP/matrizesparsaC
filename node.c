@@ -24,12 +24,15 @@ Node *createNode(int row, int col, int data)
 
 void printNode(Node *node)
 {
-    printf(" %d", node->data);
+    printf(" %3d", node->data);
 }
 
-void removeNode(Node *node)
+Node *removeNode(Node *node)
 {
-    free(node);
+    node->data = 0;
+    node->row = 0;
+    node->col = 0;
+    return node->next;
 }
 
 void db(char *str)

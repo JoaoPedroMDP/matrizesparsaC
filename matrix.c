@@ -58,6 +58,7 @@ void printMatrix(Matrix *matrix)
     {
         while (matrix->currentRow != NULL)
         {
+            printf("\n");
             printRow(matrix->currentRow, matrix->biggestRow);
             printf("\n");
             matrix->currentRow = matrix->currentRow->next;
@@ -65,18 +66,17 @@ void printMatrix(Matrix *matrix)
     }
 }
 
-void removeMatrix(Matrix *matrix)
+Matrix *removeMatrix(Matrix *matrix)
 {
     Row *walker = matrix->first;
 
     while (walker != NULL)
     {
-        removeRow(walker);
+        walker = removeRow(walker);
         matrix->size--;
-        walker = walker->next;
     }
 
-    free(matrix);
+    return matrix->next;
 }
 
 int isSquared(Matrix *matrix);
@@ -199,4 +199,48 @@ void resetCurrents(Matrix *matrix)
         matrix->currentRow = matrix->currentRow->next;
     }
     matrix->currentRow = matrix->first;
+}
+
+Matrix *invertMatrixElements(Matrix *matrix);
+void subtractMatrixes(Matrix *first, Matrix *second)
+{
+    sumMatrixes(
+        first,
+        invertMatrixElements(second)
+    );
+}
+
+void copyMatrix(Matrix *copy,Matrix* paste);
+Matrix *invertMatrixElements(Matrix *matrix)
+{
+    Matrix *inverted = mallocMatrix();
+    copyMatrix(matrix, inverted);
+
+    resetCurrents(inverted);
+    while(inverted->currentRow != NULL)
+    {
+        inverted->currentRow->currentNode = inverted->currentRow->first;
+        while(inverted->currentRow->currentNode != NULL)
+        {
+            inverted->currentRow->currentNode->data = inverted->currentRow->currentNode->data * -1;
+            inverted->currentRow->currentNode = inverted->currentRow->currentNode->next;
+        }
+
+        inverted->currentRow = inverted->currentRow->next;
+    }
+
+    return inverted;
+}
+
+void copyMatrix(Matrix *copy, Matrix* paste)
+{
+    createAllRows(paste, copy->size);
+    resetCurrents(copy);resetCurrents(paste);
+
+    while(copy->currentRow != NULL)
+    {
+        copyRows(copy->currentRow, paste->currentRow);
+        copy->currentRow = copy->currentRow->next;
+        paste->currentRow = paste->currentRow->next;
+    }
 }

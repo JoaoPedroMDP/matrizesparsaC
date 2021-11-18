@@ -19,6 +19,7 @@ void appendNode(Row *row, Node *node);
 Row *createRow(int rowNum);
 Node *getNode(int colNum, Row *row);
 void printRow(Row *row, int cols);
-void removeRow(Row *row);
+Row *removeRow(Row *row);
 Row *sumRows(Row *first, Row *second);
+void copyRows(Row *copy, Row *paste);
 #endif
