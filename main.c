@@ -10,8 +10,7 @@
 #define PRINT_MATRIX 6
 #define SHOW_MAIN_DIAGONAL 7
 #define REMOVE_MATRIX 8
-// #define
-#define SHOW_ALL_MATRIXES 10
+#define SHOW_ALL_MATRIXES 9
 
 /*
  * Mostra o menu
@@ -91,9 +90,6 @@ int main()
                     chooseMatrix(bag)
                 );
                 break;
-            case 9:
-            //     searchByContent(bag);
-            //     break;
             case SHOW_ALL_MATRIXES:
                 showAllMatrixes(bag);
                 break;

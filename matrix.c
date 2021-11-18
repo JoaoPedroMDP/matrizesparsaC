@@ -10,7 +10,7 @@ Matrix *mallocMatrix()
     newMatrix->next = NULL;
     newMatrix->currentRow = NULL;
     newMatrix->size = 0;
-    newMatrix->biggestRow = -1;
+    newMatrix->cols = -1;
 
     return newMatrix;
 }
@@ -42,9 +42,9 @@ void appendRow(Matrix *matrix, Row *row)
         matrix->last->next = row;
     }
 
-    if (row->size > matrix->biggestRow)
+    if (row->size > matrix->cols)
     {
-        matrix->biggestRow = row->size;
+        matrix->cols = row->size;
     }
     matrix->last = row;
     matrix->size++;
@@ -59,7 +59,7 @@ void printMatrix(Matrix *matrix)
         while (matrix->currentRow != NULL)
         {
             printf("\n");
-            printRow(matrix->currentRow, matrix->biggestRow);
+            printRow(matrix->currentRow, matrix->cols);
             printf("\n");
             matrix->currentRow = matrix->currentRow->next;
         }
@@ -106,7 +106,7 @@ int showMainDiagonal(Matrix *matrix)
 }
 
 int isSquared(Matrix *matrix){
-    return matrix->size == matrix->biggestRow;
+    return matrix->size == matrix->cols;
 }
 
 void createAllRows(Matrix *toReceiveTheRows, int rowNum);
@@ -117,9 +117,9 @@ Matrix *transposeMatrix(Matrix *matrix)
     Node *nodeWalker = NULL;
     Matrix *transposed = mallocMatrix();
 
-    transposed->biggestRow = matrix->size;
+    transposed->cols = matrix->size;
 
-    createAllRows(transposed, matrix->biggestRow);
+    createAllRows(transposed, matrix->cols);
     while(rowWalker != NULL)
     {
         col = 0;

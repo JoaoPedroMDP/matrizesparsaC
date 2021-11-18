@@ -11,7 +11,7 @@ struct Matrix
     Row *currentRow;
     Matrix *next;
     int size;
-    int biggestRow;
+    int cols;
 };
 
 Matrix *createMatrix();
