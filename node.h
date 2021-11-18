@@ -10,11 +10,14 @@ struct Node
     Node *next;
 };
 
+Node *zeroNode;
+
 Node *createNode(int row, int col, int data);
-void printZeroNode();
 void printNode(Node *node);
-void db();
-void dbint(int num);
-void dbout();
-void dbin();
+Node *removeNode(Node *node);
+
+Node *sumNodes(Node *first, Node *second, int col);
+
+void db(char *str);
+void dbint(int integ);
 #endif

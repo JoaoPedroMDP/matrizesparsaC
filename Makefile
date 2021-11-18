@@ -8,13 +8,14 @@ all: compile
 
 compile:
 	clear
-	gcc -Wall main.c matrix.h matrix.c row.h row.c node.h node.c
+	gcc -Wall main.c matrixBag.h matrixBag.c matrix.h matrix.c row.h row.c node.h node.c
 
-debug: CFLAGS += -g -DDEBUG
-debug: all
+debug: 
+	clear
+	gcc -g main.c matrixBag.h matrixBag.c matrix.h matrix.c row.h row.c node.h node.c
 
-clean:
-	rm -rf $(objects)
+valg:
+	valgrind -s --leak-check=full ./a.out < inp.txt
 
-purge: clean
-	rm -f a.out
+teste: compile
+	./a.out < testeCompleto.txt

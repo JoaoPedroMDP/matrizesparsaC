@@ -8,12 +8,18 @@ struct Row
 {
     Node *first;
     Node *last;
+    Node *currentNode;
     Row *next;
     int size;
+    int row;
 };
 
-Row *readRowFromInput(int row);
-void printRow(Row *row, int matrixWidth);
-Node *getNodeByCoordinates(Row *nodeRow, int row, int col);
-
+Row *mallocRow(int rowNum);
+void appendNode(Row *row, Node *node);
+Row *createRow(int rowNum);
+Node *getNode(int colNum, Row *row);
+void printRow(Row *row, int cols);
+Row *removeRow(Row *row);
+Row *sumRows(Row *first, Row *second);
+void copyRows(Row *copy, Row *paste);
 #endif

@@ -2,40 +2,67 @@
 #include <stdlib.h>
 #include "node.h"
 
-/*
- * Cria um novo nó
- */
-Node *createNode(int row, int col, int data)
+Node *mallocNode()
 {
     Node *newNode = malloc(sizeof(Node));
-    newNode->next = NULL;
-    newNode->data = data;
-    newNode->row = row;
-    newNode->col = col;
+    newNode->col = 0;
+    newNode->row = 0;
+    newNode->data = 0;
     return newNode;
 }
 
-void printZeroNode()
+Node *createNode(int row, int col, int data)
 {
-    printf("0 ");
+    Node *newNode = mallocNode();
+    newNode->col = col;
+    newNode->row = row;
+    newNode->data = data;
+    newNode->next = NULL;
+
+    return newNode;
 }
 
 void printNode(Node *node)
 {
-    printf("%d ", node->data);
+    if(node->data == 0)
+    {
+        printf("\033[0;31m");
+        printf(" %3d", node->data);
+        printf("\033[0m");
+    }else
+    {
+        printf(" %3d", node->data);
+    }
 }
 
-void dbin()
+Node *removeNode(Node *node)
 {
-    printf("<[");
+    node->data = 0;
+    node->row = 0;
+    node->col = 0;
+    return node->next;
 }
 
-void dbout()
+void db(char *str)
 {
-    printf("]>");
+    printf("\n%s", str);
 }
 
-void dbint(int num)
+void dbint(int integ)
 {
-    printf("\n>>%d<<\n", num);
+    printf("%d\n", integ);
+}
+
+Node *sumNodes(Node *first, Node *second, int col)
+{
+    int sum = first->data + second->data;
+    if(sum == 0){
+        return zeroNode;
+    }
+
+    return createNode(
+        first->row,
+        col,
+        sum
+    );
 }

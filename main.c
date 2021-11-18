@@ -1,73 +1,101 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include "matrix.h"
+#include "matrixBag.h"
+
+#define EXIT -1
+#define CREATE_MATRIX 1
+#define SUM_MATRIXES 2
+#define SUBTRACT_MATRIXES 3
+#define MULTIPLY_MATRIXES 4
+#define TRANSPOSE_MATRIX 5
+#define PRINT_MATRIX 6
+#define SHOW_MAIN_DIAGONAL 7
+#define REMOVE_MATRIX 8
+#define SHOW_ALL_MATRIXES 9
 
 /*
  * Mostra o menu
  */
 void printsMenu()
 {
-    printf("------------------MENU------------------\n");
-    printf("   1) Inserir nova matriz\n");
-    printf("   2) Somar matrizes\n");
-    printf("   3) Subtrair matrizes\n");
-    printf("   4) Multiplicar matrizes\n");
-    printf("   5) Gerar matriz transposta\n");
-    printf("   6) Mostrar matriz\n");
-    printf("   7) Mostrar diagonal principal\n");
-    printf("   8) Remover Matriz\n");
-    printf("   9) Consultar pelo conteudo\n");
-    printf("   10) Sair\n");
+    printf("\n------------------MENU------------------\n");
+    printf("   %d) Sair\n", EXIT);
+    printf("   %d) Inserir nova matriz\n", CREATE_MATRIX);
+    printf("   %d) Somar matrizes\n", SUM_MATRIXES);
+    printf("   %d) Subtrair matrizes\n", SUBTRACT_MATRIXES);
+    printf("   %d) Multiplicar matrizes\n", MULTIPLY_MATRIXES);
+    printf("   %d) Transpor matriz\n", TRANSPOSE_MATRIX);
+    printf("   %d) Ver matriz\n", PRINT_MATRIX);
+    printf("   %d) Diagonal principal\n", SHOW_MAIN_DIAGONAL);
+    printf("   %d) Remover Matriz\n", REMOVE_MATRIX);
+    printf("   %d) Mostrar todas as matrizes\n", SHOW_ALL_MATRIXES);
     printf("Escolha uma opção: ");
 }
 
 int main()
 {
     int option = 0;
-    MatrixBag *bag = createBag();
-    Matrix *toOperate = NULL;
+    Bag *bag = createBag();
+    zeroNode = createNode(0, 0, 0);
+    Matrix *first = NULL;
+    Matrix *second = NULL;
+
     printsMenu();
     setbuf(stdin, 0);
     scanf("%d", &option);
-    while (option != 11)
+    while (option != -1)
     {
+        printf("\n<<<<<%d>>>>>\n", option);
         switch (option)
         {
-        case 1:
-            toOperate = createMatrixOption();
-            insertMatrixOnBag(toOperate, bag);
-            break;
-        // case 2:
-        //     sumMatrixesOption(bag);
-        //     break;
-        // case 3:
-        //     subtractMatrixesOption(bag);
-        //     break;
-        // case 4:
-        //     multiplyMatrixesOption(bag);
-        //     break;
-        case 5:
-            // toOperate = chooseMatrix(bag);
-            // transposeMatrix(toOperate);
-            // break;
-        case 6:
-            toOperate = chooseMatrix(bag);
-            printMatrix(toOperate);
-            break;
-        case 7:
-            toOperate = chooseMatrix(bag);
-            showMainDiagonalOption(toOperate);
-            break;
-        case 8:
-            toOperate = chooseMatrix(bag);
-            removeMatrix(bag, toOperate);
-            break;
-        // case 9:
-        //     searchByContent(bag);
-        //     break;
-        case 10:
-            showAllMatrixes(bag);
-            break;
+            case EXIT:
+                printf("Ateh!");
+                break;
+            case CREATE_MATRIX:
+                appendMatrix(
+                    bag,
+                    createMatrix());
+                break;
+            case SUM_MATRIXES:;
+                first = chooseMatrix(bag);
+                second = chooseMatrix(bag);
+                sumMatrixes(first, second);
+                break;
+            case SUBTRACT_MATRIXES:
+                first = chooseMatrix(bag);
+                second = chooseMatrix(bag);
+                subtractMatrixes(first, second);
+                break;
+            case MULTIPLY_MATRIXES:
+                first = chooseMatrix(bag);
+                second = chooseMatrix(bag);
+                multiplyMatrixes(first, second);
+                break;
+            case TRANSPOSE_MATRIX:;
+                Matrix *toTranspose = chooseMatrix(bag);
+                replaceMatrixes(
+                    bag,
+                    transposeMatrix(toTranspose),
+                    toTranspose
+                );
+                break;
+            case PRINT_MATRIX:
+                printMatrix(chooseMatrix(bag));
+                break;
+            case SHOW_MAIN_DIAGONAL:
+                showMainDiagonal(chooseMatrix(bag));
+                break;
+            case REMOVE_MATRIX:;
+                removeMatrixFromBag(
+                    bag,
+                    chooseMatrix(bag)
+                );
+                break;
+            case SHOW_ALL_MATRIXES:
+                showAllMatrixes(bag);
+                break;
+            default:
+                printf("Opcao %d nao encontrada", option);
+                break;
         }
         printsMenu();
         setbuf(stdin, 0);
