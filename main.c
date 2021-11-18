@@ -3,9 +3,9 @@
 
 #define EXIT -1
 #define CREATE_MATRIX 1
-#define SOMAR_MATRIZES 2
+#define SUM_MATRIXES 2
 #define SUBTRACT_MATRIXES 3
-// #define
+#define MULTIPLY_MATRIXES 4
 #define TRANSPOSE_MATRIX 5
 #define PRINT_MATRIX 6
 #define SHOW_MAIN_DIAGONAL 7
@@ -20,14 +20,13 @@ void printsMenu()
     printf("\n------------------MENU------------------\n");
     printf("   %d) Sair\n", EXIT);
     printf("   %d) Inserir nova matriz\n", CREATE_MATRIX);
-    printf("   %d) Somar matrizes\n", SOMAR_MATRIZES);
+    printf("   %d) Somar matrizes\n", SUM_MATRIXES);
     printf("   %d) Subtrair matrizes\n", SUBTRACT_MATRIXES);
-    printf("   4) Multiplicar matrizes\n");
+    printf("   %d) Multiplicar matrizes\n", MULTIPLY_MATRIXES);
     printf("   %d) Transpor matriz\n", TRANSPOSE_MATRIX);
     printf("   %d) Ver matriz\n", PRINT_MATRIX);
     printf("   %d) Diagonal principal\n", SHOW_MAIN_DIAGONAL);
     printf("   %d) Remover Matriz\n", REMOVE_MATRIX);
-    printf("   9) Consultar pelo conteudo\n");
     printf("   %d) Mostrar todas as matrizes\n", SHOW_ALL_MATRIXES);
     printf("   %d) Sair\n", EXIT);
     printf("Escolha uma opção: ");
@@ -57,7 +56,7 @@ int main()
                     bag,
                     createMatrix());
                 break;
-            case 2:;
+            case SUM_MATRIXES:;
                 first = chooseMatrix(bag);
                 second = chooseMatrix(bag);
                 sumMatrixes(first, second);
@@ -67,9 +66,11 @@ int main()
                 second = chooseMatrix(bag);
                 subtractMatrixes(first, second);
                 break;
-            // case 4:
-            //     multiplyMatrixesOption(bag);
-            //     break;
+            case MULTIPLY_MATRIXES:
+                first = chooseMatrix(bag);
+                second = chooseMatrix(bag);
+                multiplyMatrixes(first, second);
+                break;
             case TRANSPOSE_MATRIX:;
                 Matrix *toTranspose = chooseMatrix(bag);
                 replaceMatrixes(

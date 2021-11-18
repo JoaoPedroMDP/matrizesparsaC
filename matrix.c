@@ -244,3 +244,64 @@ void copyMatrix(Matrix *copy, Matrix* paste)
         paste->currentRow = paste->currentRow->next;
     }
 }
+
+void multiplyMatrixByRow(Matrix *matrix, Row *row, Row *results);
+int multiplyMatrixes(Matrix *first, Matrix *second)
+{
+    if(first->cols != second->size)
+    {
+        printf("Voce so pode multiplicar matrizes caso o 'j' da primeira seja igual ao 'i' da segunda");
+        return 0;
+    }
+
+    Matrix *result = mallocMatrix();
+    createAllRows(result, first->size);
+    result->cols = second->cols;
+    resetCurrents(first);resetCurrents(second);resetCurrents(result);
+    while(first->currentRow)
+    {
+        multiplyMatrixByRow(second, first->currentRow, result->currentRow);
+        resetCurrents(second);
+        first->currentRow = first->currentRow->next;
+        result->currentRow = result->currentRow->next;
+    }
+
+    printMatrix(result);
+    return 1;
+}
+
+int multiplyColumnByRow(Matrix *matrix, Row *row, int col);
+void multiplyMatrixByRow(Matrix *matrix, Row *row, Row *results)
+{
+    int col = 0;
+    for( col = 0; col < row->size; col++)
+    {
+        appendNode(
+            results,
+            createNode(
+                row->row,
+                col,
+                multiplyColumnByRow(matrix, row, col)
+                )
+            );
+    }
+}
+
+int multiplyColumnByRow(Matrix *matrix, Row *row, int col)
+{
+    int result = 0, colTracker = 0;
+    Node *first = NULL, *second = NULL;
+
+    matrix->currentRow = matrix->first;
+    while(colTracker < row->size)
+    {
+        first = getNode(colTracker, row);
+        second = getNode(col, matrix->currentRow);
+        result += first->data * second->data;
+
+        matrix->currentRow = matrix->currentRow->next;
+        colTracker++;
+    }
+
+    return result;
+}

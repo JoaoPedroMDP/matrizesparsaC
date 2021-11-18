@@ -21,4 +21,5 @@ int showMainDiagonal(Matrix *matrix);
 Matrix *transposeMatrix(Matrix *matrix);
 void sumMatrixes(Matrix *first, Matrix *second);
 void subtractMatrixes(Matrix *first, Matrix *second);
+int multiplyMatrixes(Matrix *first, Matrix *second);
 #endif
