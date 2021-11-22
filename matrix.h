@@ -19,7 +19,7 @@ void printMatrix(Matrix *matrix);
 Matrix *removeMatrix(Matrix *matrix);
 int showMainDiagonal(Matrix *matrix);
 Matrix *transposeMatrix(Matrix *matrix);
-void sumMatrixes(Matrix *first, Matrix *second);
-void subtractMatrixes(Matrix *first, Matrix *second);
-int multiplyMatrixes(Matrix *first, Matrix *second);
+Matrix *sumMatrixes(Matrix *first, Matrix *second);
+Matrix *subtractMatrixes(Matrix *first, Matrix *second);
+Matrix *multiplyMatrixes(Matrix *first, Matrix *second);
 #endif

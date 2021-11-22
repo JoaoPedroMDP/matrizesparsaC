@@ -163,11 +163,12 @@ void createAllRows(Matrix *toReceiveTheRows, int rowNum)
 }
 
 int areSameSize(Matrix *a, Matrix*b);
-void sumMatrixes(Matrix *first, Matrix *second)
+Matrix *sumMatrixes(Matrix *first, Matrix *second)
 {
     if(!areSameSize(first, second))
     {
         printf("Voce so pode somar matrizes de tamanhos iguais!");
+        return NULL;
     }else{
         int row = 0;
         Matrix *result = mallocMatrix();
@@ -192,7 +193,9 @@ void sumMatrixes(Matrix *first, Matrix *second)
             row++;
         }
 
+
         printMatrix(result);
+        return result;
     }
 }
 
@@ -214,13 +217,14 @@ void resetCurrents(Matrix *matrix)
 }
 
 Matrix *invertMatrixElements(Matrix *matrix);
-void subtractMatrixes(Matrix *first, Matrix *second)
+Matrix *subtractMatrixes(Matrix *first, Matrix *second)
 {
     if(!areSameSize(first, second))
     {
         printf("Voce so pode subtrair matrizes de tamanhos iguais!");
+        return NULL;
     }else{
-        sumMatrixes(
+        return sumMatrixes(
             first,
             invertMatrixElements(second)
         );
@@ -263,28 +267,29 @@ void copyMatrix(Matrix *copy, Matrix* paste)
 }
 
 void multiplyMatrixByRow(Matrix *matrix, Row *row, Row *results);
-int multiplyMatrixes(Matrix *first, Matrix *second)
+Matrix *multiplyMatrixes(Matrix *first, Matrix *second)
 {
     if(first->cols != second->size)
     {
         printf("Voce so pode multiplicar matrizes caso o 'j' da primeira seja igual ao 'i' da segunda");
-        return 0;
-    }
+    }else{
+        Matrix *result = mallocMatrix();
+        createAllRows(result, first->size);
+        result->cols = second->cols;
+        resetCurrents(first);resetCurrents(second);resetCurrents(result);
 
-    Matrix *result = mallocMatrix();
-    createAllRows(result, first->size);
-    result->cols = second->cols;
-    resetCurrents(first);resetCurrents(second);resetCurrents(result);
-    while(first->currentRow)
-    {
-        multiplyMatrixByRow(second, first->currentRow, result->currentRow);
-        resetCurrents(second);
-        first->currentRow = first->currentRow->next;
-        result->currentRow = result->currentRow->next;
-    }
+        while(first->currentRow)
+        {
+            multiplyMatrixByRow(second, first->currentRow, result->currentRow);
+            resetCurrents(second);
+            first->currentRow = first->currentRow->next;
+            result->currentRow = result->currentRow->next;
+        }
 
-    printMatrix(result);
-    return 1;
+        printMatrix(result);
+        return result;
+    }
+    return NULL;
 }
 
 int multiplyColumnByRow(Matrix *matrix, Row *row, int col);

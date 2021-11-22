@@ -6,13 +6,13 @@ struct Node
 {
     int row;
     int col;
-    int data;
+    float data;
     Node *next;
 };
 
 Node *zeroNode;
 
-Node *createNode(int row, int col, int data);
+Node *createNode(int row, int col, float data);
 void printNode(Node *node);
 Node *removeNode(Node *node);
 

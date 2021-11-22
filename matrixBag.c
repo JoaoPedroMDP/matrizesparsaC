@@ -46,8 +46,13 @@ Matrix *getMatrixByIndex(Bag *bag, int matrixIndex)
     return NULL;
 }
 
-void appendMatrix(Bag *bag, Matrix *matrix)
+int appendMatrix(Bag *bag, Matrix *matrix)
 {
+    if(matrix == NULL)
+    {
+        return 0;
+    }
+
     if (bag->first == NULL)
     {
         bag->first = matrix;
@@ -59,6 +64,7 @@ void appendMatrix(Bag *bag, Matrix *matrix)
 
     bag->last = matrix;
     bag->size++;
+    return 1;
 }
 
 void showAllMatrixes(Bag *bag)

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 #include "node.h"
 
 Node *mallocNode()
@@ -11,7 +12,7 @@ Node *mallocNode()
     return newNode;
 }
 
-Node *createNode(int row, int col, int data)
+Node *createNode(int row, int col, float data)
 {
     Node *newNode = mallocNode();
     newNode->col = col;
@@ -24,15 +25,17 @@ Node *createNode(int row, int col, int data)
 
 void printNode(Node *node)
 {
+    setlocale(LC_NUMERIC, "C");
     if(node->data == 0)
     {
         printf("\033[0;31m");
-        printf(" %3d", node->data);
+        printf(" %3.2f", node->data);
         printf("\033[0m");
     }else
     {
-        printf(" %3d", node->data);
+        printf(" %3.2f", node->data);
     }
+    setlocale(LC_NUMERIC, "");
 }
 
 Node *removeNode(Node *node)
@@ -55,7 +58,7 @@ void dbint(int integ)
 
 Node *sumNodes(Node *first, Node *second, int col)
 {
-    int sum = first->data + second->data;
+    float sum = first->data + second->data;
     if(sum == 0){
         return zeroNode;
     }

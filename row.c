@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 #include "row.h"
 
 Row *mallocRow(int rowNum)
@@ -18,13 +19,16 @@ void appendNode(Row *row, Node *node);
 Row *createRow(int rowNum)
 {
     Row *newRow = mallocRow(rowNum);
-    int number = 0, col = 0;
+    float number = 0.0;
+    int col = 0;
     char spacing = ' ';
 
     do
     {
-        scanf("%d%c", &number, &spacing);
-        if (number != 0)
+        setlocale(LC_NUMERIC, "C");
+        scanf("%f%c", &number, &spacing);
+        setlocale(LC_NUMERIC, "");
+        if (number != 0.0)
         {
             appendNode(
                 newRow,

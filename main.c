@@ -58,12 +58,18 @@ int main()
             case SUM_MATRIXES:;
                 first = chooseMatrix(bag);
                 second = chooseMatrix(bag);
-                sumMatrixes(first, second);
+                appendMatrix(
+                    bag,
+                    sumMatrixes(first, second)
+                );
                 break;
             case SUBTRACT_MATRIXES:
                 first = chooseMatrix(bag);
                 second = chooseMatrix(bag);
-                subtractMatrixes(first, second);
+                appendMatrix(
+                    bag,
+                    subtractMatrixes(first, second)
+                );
                 break;
             case MULTIPLY_MATRIXES:
                 first = chooseMatrix(bag);
