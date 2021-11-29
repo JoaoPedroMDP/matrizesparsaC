@@ -44,7 +44,7 @@ int main()
     scanf("%d", &option);
     while (option != -1)
     {
-        printf("\n<<<<<%d>>>>>\n", option);
+        printf("\nOpcao %d selecionada\n", option);
         switch (option)
         {
             case EXIT:

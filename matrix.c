@@ -18,7 +18,6 @@ Matrix *mallocMatrix()
 void appendRow(Matrix *matrix, Row *row);
 Matrix *createMatrix()
 {
-    db(">>>>>>>>>>>>>>>>>>>");
     Matrix *newMatrix = mallocMatrix();
     char keepInsertion = 'S';
     do
@@ -146,7 +145,7 @@ Matrix *transposeMatrix(Matrix *matrix)
 
         rowWalker = rowWalker->next;
     }
-
+    printMatrix(transposed);
     return transposed;
 }
 
